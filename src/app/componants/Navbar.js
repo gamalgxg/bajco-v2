@@ -8,9 +8,17 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -20,7 +28,24 @@ import logoBlack from "../../../public/images/bajco_black.png";
 import logoWhite from "../../../public/images/bajco_white.png";
 import Image from "next/image";
 import Link from "next/link";
-const pages = ["مغاسل رخام", "تواصل معنا", "المدونة"];
+import { Grid } from "@mui/material";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
+const pages = [
+  { id: 1, title: "مغاسل رخام", url: "مغاسل_رخام" },
+  {
+    id: 2,
+    title: "اتصل بنا",
+    url: "",
+  },
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function HideOnScroll(props) {
@@ -49,6 +74,16 @@ HideOnScroll.propTypes = {
 };
 
 export default function HideAppBar(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -95,11 +130,11 @@ export default function HideAppBar(props) {
                 sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
               >
                 <IconButton
+                  onClick={handleClickOpen}
                   size="large"
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
                   color="inherit"
                 >
                   <MenuIcon />
@@ -116,17 +151,20 @@ export default function HideAppBar(props) {
                     vertical: "top",
                     horizontal: "left",
                   }}
-                  open={Boolean(anchorElNav)}
                   onClose={handleCloseNavMenu}
                   sx={{
                     display: { xs: "block", md: "none" },
                   }}
                 >
                   {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center" className="fontTajwal">
-                        {page}
-                      </Typography>
+                    <MenuItem key={page.id} onClick={handleCloseNavMenu}>
+                      <Link
+                        href={page.url}
+                        textAlign="center"
+                        className="fontTajwal"
+                      >
+                        {page.title}
+                      </Link>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -147,11 +185,19 @@ export default function HideAppBar(props) {
                 </Link>
               </Box>
 
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Box
+                sx={{
+                  gap: "20px",
+                  color: "#FF6969",
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
                 {pages.map((page) => (
-                  <Button
+                  <Link
+                    href={page.url}
                     className="fontTajwal"
-                    key={page}
+                    key={page.id}
                     onClick={handleCloseNavMenu}
                     sx={{
                       my: 2,
@@ -160,8 +206,8 @@ export default function HideAppBar(props) {
                       fontSize: "20px",
                     }}
                   >
-                    {page}
-                  </Button>
+                    {page.title}
+                  </Link>
                 ))}
               </Box>
 
@@ -201,6 +247,31 @@ export default function HideAppBar(props) {
         </AppBar>
       </HideOnScroll>
       <Toolbar />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"الأقسام:"}</DialogTitle>
+        <DialogContent className="css-1t1j96h-MuiPaper-root-MuiDialog-paper">
+          <DialogContentText id="alert-dialog-description">
+            <Box display="flex" paddingBottom={2} justifyContent="space-around">
+              <div>مغاسل رخام</div>
+              <div>أعمالنا</div>
+            </Box>
+            <Box display="flex" justifyContent="space-around">
+              <div>معرض الصور</div>
+              <div>المدونة</div>
+            </Box>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="red" onClick={handleClose} autoFocus>
+            إغلاق
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }
