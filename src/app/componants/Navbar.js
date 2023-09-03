@@ -12,7 +12,6 @@ import Slide from "@mui/material/Slide";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -72,17 +71,29 @@ export default function HideAppBar(props) {
     <React.Fragment>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar sx={{ height: 100, backgroundColor: "#16A349" }}>
-          <Container maxWidth="xl">
-            <Toolbar disableGutters>
+        <AppBar sx={{ height: 100, backgroundColor: "#183D3D" }}>
+          <Container sx={{ paddingTop: "15px" }} maxWidth="xl">
+            <Toolbar
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              className="justifyContentImportant"
+            >
               <Box
                 sx={{ display: { xs: "none", md: "flex" }, paddingLeft: 60 }}
               >
-                {" "}
-                <Image src={logoWhite} alt="" width={80} />
+                <Link href="/">
+                  <Image
+                    style={{ display: { lg: "none" } }}
+                    src={logoWhite}
+                    alt=""
+                    width={150}
+                  />
+                </Link>
               </Box>
 
-              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <Box
+                maxWidth="48px"
+                sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+              >
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -113,37 +124,41 @@ export default function HideAppBar(props) {
                 >
                   {pages.map((page) => (
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                      <Typography textAlign="center" className="fontTajwal">
+                        {page}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>
               </Box>
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href="/"
+
+              <Box
                 sx={{
-                  mr: 2,
-                  display: { xs: "flex", md: "none" },
-                  flexGrow: 1,
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
+                  display: {
+                    lg: "none",
+                    justifyContent: "space-between",
+                    md: "none",
+                    justifyContent: "space-between",
+                  },
                 }}
               >
                 <Link href="/">
-                  <Image src={logoWhite} alt="" width={100} />
+                  <Image src={logoWhite} alt="" width={150} />
                 </Link>
-              </Typography>
+              </Box>
+
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
                   <Button
+                    className="fontTajwal"
                     key={page}
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontSize: "20px",
+                    }}
                   >
                     {page}
                   </Button>
@@ -153,7 +168,9 @@ export default function HideAppBar(props) {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="صفحة التواصل">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <ContactPhoneIcon sx={{ color: "white" }} />
+                    <ContactPhoneIcon
+                      sx={{ color: "white", fontSize: "30px", width: "48px" }}
+                    />
                   </IconButton>
                 </Tooltip>
                 <Menu

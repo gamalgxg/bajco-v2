@@ -25,3 +25,10 @@
     )
     rgb(var(--background-start-rgb));
 } */
+.fontTajwal {
+  font-family: __Tajawal_2ab7b3 !important;
+}
+
+.justifyContentImportant {
+  justify-content: space-between !important;
+}
